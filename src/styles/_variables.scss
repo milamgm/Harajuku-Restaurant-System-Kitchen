@@ -1,0 +1,22 @@
+//COLORS
+$colors: (
+"primary": rgb(71, 157, 255),
+"secondary": rgb(203, 203, 203),
+"success": rgb(15, 172, 9),
+"danger": rgb(224, 6, 6),
+"warning": rgb(225, 195, 26),
+"info": rgb(119, 214, 231),
+"light": rgb(245, 245, 245),
+"dark": rgb(31, 31, 31));
+
+$primary: map-get($colors, "primary" ) ;
+$secondary: map-get($colors,"secondary") ;
+$success: map-get($colors, "success" ) ;
+$danger: map-get($colors,"danger") ;
+$warning: map-get($colors, "warning" ) ;
+$info: map-get($colors, "info" ) ;
+$light: map-get($colors,  "light") ;
+$dark: map-get($colors,"dark"  ) ;
+
+//SHADOWS
+$shadow_light: rgba(53, 53, 53, 0.35) 0px 5px 15px;

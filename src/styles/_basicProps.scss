@@ -1,0 +1,24 @@
+@mixin badge($color) {
+        background-color: $color;
+        border: none;
+        border-radius: 5%;
+        padding: 4px 8px;
+        font-weight: 600;
+        text-align: center;
+        font-size:  .8rem;
+        line-height: .9rem;
+        margin: .1rem;
+        color: #fbfbfb;
+}
+@mixin btn($color) {
+        background-color: $color;
+        border: none;
+        margin: .1rem;
+        padding: 7px 13px;
+        border-radius: 5%;
+        color: #fbfbfb;
+        transition: background-color .2s;
+        &:hover{
+            background-color: mix(#656565, $color, 50%);
+        }
+}

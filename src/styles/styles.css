@@ -1,0 +1,143 @@
+.btn-primary {
+  background-color: rgb(71, 157, 255);
+  border: none;
+  margin: 0.1rem;
+  padding: 7px 13px;
+  border-radius: 5%;
+  color: #fbfbfb;
+  transition: background-color 0.2s;
+}
+.btn-primary:hover {
+  background-color: #5681b2;
+}
+
+.btn-secondary {
+  background-color: rgb(203, 203, 203);
+  border: none;
+  margin: 0.1rem;
+  padding: 7px 13px;
+  border-radius: 5%;
+  color: #fbfbfb;
+  transition: background-color 0.2s;
+}
+.btn-secondary:hover {
+  background-color: #989898;
+}
+
+.btn-success {
+  background-color: rgb(15, 172, 9);
+  border: none;
+  margin: 0.1rem;
+  padding: 7px 13px;
+  border-radius: 5%;
+  color: #fbfbfb;
+  transition: background-color 0.2s;
+}
+.btn-success:hover {
+  background-color: #3a8937;
+}
+
+.btn-danger {
+  background-color: rgb(224, 6, 6);
+  border: none;
+  margin: 0.1rem;
+  padding: 7px 13px;
+  border-radius: 5%;
+  color: #fbfbfb;
+  transition: background-color 0.2s;
+}
+.btn-danger:hover {
+  background-color: #a33636;
+}
+
+.btn-warning {
+  background-color: rgb(225, 195, 26);
+  border: none;
+  margin: 0.1rem;
+  padding: 7px 13px;
+  border-radius: 5%;
+  color: #fbfbfb;
+  transition: background-color 0.2s;
+}
+.btn-warning:hover {
+  background-color: #a39440;
+}
+
+.btn-info {
+  background-color: rgb(119, 214, 231);
+  border: none;
+  margin: 0.1rem;
+  padding: 7px 13px;
+  border-radius: 5%;
+  color: #fbfbfb;
+  transition: background-color 0.2s;
+}
+.btn-info:hover {
+  background-color: #6e9ea6;
+}
+
+.btn-light {
+  background-color: rgb(245, 245, 245);
+  border: none;
+  margin: 0.1rem;
+  padding: 7px 13px;
+  border-radius: 5%;
+  color: #fbfbfb;
+  transition: background-color 0.2s;
+}
+.btn-light:hover {
+  background-color: #adadad;
+}
+
+.btn-dark {
+  background-color: rgb(31, 31, 31);
+  border: none;
+  margin: 0.1rem;
+  padding: 7px 13px;
+  border-radius: 5%;
+  color: #fbfbfb;
+  transition: background-color 0.2s;
+}
+.btn-dark:hover {
+  background-color: #424242;
+}
+
+.badge-primary {
+  background-color: rgb(71, 157, 255);
+  border: none;
+  border-radius: 5%;
+  padding: 4px 8px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 0.9rem;
+  margin: 0.1rem;
+  color: #fbfbfb;
+}
+
+.card {
+  background-color: rgb(245, 245, 245);
+  margin-top: 15px;
+  color: rgb(31, 31, 31);
+  border: solid 1px #c4c4c4;
+  box-shadow: rgba(53, 53, 53, 0.35) 0px 5px 15px;
+}
+.card .card-head {
+  background-color: #dddddd;
+}
+.card .card-head .card-head-items {
+  color: rgb(31, 31, 31);
+  padding: 6px 20px;
+}
+.card .card-body {
+  width: 95%;
+  margin: 10px 10px;
+  padding: 20px;
+  color: rgb(31, 31, 31);
+  font-size: 1.1rem;
+}
+.card .card-body .card-btn-area {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}/*# sourceMappingURL=styles.css.map */
