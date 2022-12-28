@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
-import db from "../firebase/firebaseConfig.js";
+import db from "../firebase/firebaseConfig";
 import {
   collection,
   deleteDoc,
@@ -8,75 +7,78 @@ import {
   setDoc,
   doc,
 } from "firebase/firestore";
+import { IItem, IOrder } from "../types/types";
+import { IAppContext } from "../types/contextTypes";
 
 type AppContextProviderProps = {
-  children: ReactNode;
+  children: JSX.Element;
 };
 
-const context = createContext({});
-
+const context = createContext({} as IAppContext);
 
 export const useAppContext = () => {
   return useContext(context);
 };
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
-  const [activeOrders, setActiveOrders] = useState([]);
-  const [completedOrders, setCompletedOrders] = useState([]);
-  const [deletedOrders, setDeletedOrders] = useState([]);
-  const [showAlert, setShowAlert] = useState(false)
+  const [activeOrders, setActiveOrders] = useState<IOrder[]>([]);
+  const [completedOrders, setCompletedOrders] = useState<IOrder[]>([]);
+  const [deletedOrders, setDeletedOrders] = useState<IOrder[]>([]);
+  const [showAlert, setShowAlert] = useState(false);
 
-  const updateFinishedOrders = (fullOrder, setState) => {
+  ///updates finished orders (completedOrders or canceledOrders) and removes them from activeOrders.
+  const updateFinishedOrders: IAppContext["updateFinishedOrders"] = (
+    fullOrder,
+    setState
+  ) => {
     setState((prevFinishedOrders) => {
-      if (
-        !prevFinishedOrders.find((data) => data.order_id === fullOrder.order_id)
-      ) {
+      const exists = prevFinishedOrders.find(
+        (data) => data.order_id === fullOrder.order_id
+      );
+      if (exists === undefined) {
+        // Adds the order in case this does not exist in the list yet.
         return [...prevFinishedOrders, fullOrder];
       } else {
-        const q = prevFinishedOrders.map((finishedOrder) => {
+        // If this already exists, searchs it and updates its items quantity and price.
+        const updatedOrder = prevFinishedOrders.map((finishedOrder) => {
           if (finishedOrder.order_id !== fullOrder.order_id) {
             return finishedOrder;
           } else {
-            const total = [...finishedOrder.items, ...fullOrder.items];
-            const updatedItems = total.reduce((accum, curr) => {
-              const existsInAccum = accum.find(
-                (accumItem) => accumItem.id === curr.id
+            const initialValueReducer: IItem[] = [];
+            const updatedItems = [
+              ...finishedOrder.items,
+              ...fullOrder.items,
+            ].reduce((accum, curr) => {
+              const repeatedItem = accum.find(
+                (item: IItem) => item.id === curr.id
               );
-              if (!existsInAccum) {
-                return [...accum, curr];
+              if (repeatedItem !== undefined) {
+                repeatedItem.quantity += curr.quantity;
+                repeatedItem.price += curr.price;
               } else {
-                const updatedQty = accum.map((accumItem) => {
-                  if (accumItem.id !== curr.id) {
-                    return accumItem;
-                  } else {
-                    return {
-                      ...curr,
-                      quantity: accumItem.quantity + curr.quantity,
-                    };
-                  }
-                });
-                return updatedQty;
+                accum.push(curr);
               }
-            }, []);
-
+              return accum;
+            }, initialValueReducer);
             return {
               ...finishedOrder,
               items: updatedItems,
             };
           }
         });
-        return q;
+        return updatedOrder;
       }
     });
     const deleteOrderFromActive = async () => {
-      await deleteDoc(doc(db, "activeOrders", fullOrder.order_id))
-    }
-    deleteOrderFromActive()
+      await deleteDoc(doc(db, "activeOrders", fullOrder.order_id));
+    };
+    deleteOrderFromActive();
   };
 
-  const add = (array, collectionName) => {
+  //Adds array of orders to the database.
+  const addToDB = (array: IOrder[], collectionName: string) => {
     array.map((order) => {
-      const addToDB = async () => {
+      const add = async () => {
         await setDoc(doc(db, collectionName, order.order_id), {
           order_id: order.order_id,
           table_num: order.table_num,
@@ -84,23 +86,30 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
           items: order.items,
         });
       };
-      addToDB();
+      add();
     });
   };
 
+  //Fetches active orders.
   useEffect(() => {
     onSnapshot(collection(db, "activeOrders"), (snapshot) => {
       setActiveOrders([]);
       snapshot.docs.forEach((doc) => {
-        setActiveOrders((prevProducts) => [...prevProducts, doc.data()]);
+        const orderFetch = doc.data() as IOrder;
+        setActiveOrders((prevActiveOrders) => [
+          ...prevActiveOrders,
+          orderFetch,
+        ]);
       });
     });
   }, []);
+
+  //Add changes in completedOrders or deletedOrders to the database.
   useEffect(() => {
-    add(completedOrders, "completedOrders");
+    addToDB(completedOrders, "completedOrders");
   }, [completedOrders]);
   useEffect(() => {
-    add(deletedOrders, "deletedOrders");
+    addToDB(deletedOrders, "deletedOrders");
   }, [deletedOrders]);
   return (
     <context.Provider
@@ -112,7 +121,7 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
         deletedOrders,
         setDeletedOrders,
         setShowAlert,
-        showAlert
+        showAlert,
       }}
     >
       {children}

@@ -2,37 +2,19 @@
 @import "basicProps";
 
 @each $key, $color in $colors {
-    .btn-#{$key}{
-        @include btn($color);
-    }
+  .btn-#{$key} {
+    @include btn($color);
+  }
 }
-.badge-primary{
-    @include badge( map-get($colors , "primary"));
+.badge-primary {
+  @include badge(map-get($colors, "primary"));
 }
 
-.card{
-        background-color: $light;
-        margin-top: 15px;
-        color: $dark;
-        border: solid 1px mix(black, $light, 20%);
-        box-shadow: $shadow_light;
-        .card-head{
-            background-color: mix(black, $light, 10%);
-            .card-head-items{
-                color: $dark;
-                padding: 6px 20px;
-            }
-        }
-        .card-body{
-            width: 95%;
-            margin: 10px 10px;
-            padding: 20px;
-            color: $dark;
-            font-size: 1.1rem;
-            .card-btn-area{
-                margin-top: 10px;
-                display: flex;
-                justify-content: space-between;
-            }
-        }
+.flex_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fit{
+    width: fit-content;
 }

@@ -1,17 +1,30 @@
 import { BsFillTrashFill } from "react-icons/bs";
-import { Badge, Button, Container, ListGroup, Stack } from "react-bootstrap";
+import {Container, ListGroup, Stack } from "react-bootstrap";
 import { useAppContext } from "../context/UseStateContext";
 import Alert from "./Alert";
 import Counter from "./Counter";
 import newOrderSound from "../../public/sounds/new_order_notification.wav";
+import { IItem, IOrder } from "../types/types";
+//const notificationSound = new Audio(newOrderSound);
 
-const notificationSound = new Audio(newOrderSound);
-
-const OrderField = ({ table_num, items, place, fullOrder, order_id, time }) => {
+type OrderFieldProps = {
+  table_num: number;
+  items: IItem[];
+  fullOrder: IOrder;
+  order_id: string;
+  time: number;
+};
+//////////FIELD THAT DISPLAYS THE ORDER DATA ON THE ACTIVEORDERS PAGE
+const OrderField = ({
+  table_num,
+  items,
+  fullOrder,
+  order_id,
+  time,
+}: OrderFieldProps) => {
   const {
     updateFinishedOrders,
     setCompletedOrders,
-    completedOrders,
     setShowAlert,
   } = useAppContext();
 
@@ -20,7 +33,7 @@ const OrderField = ({ table_num, items, place, fullOrder, order_id, time }) => {
       <div className="card-head">
         <Stack direction="horizontal" className="card-head-items">
           <h5>
-            {place ? place + "," : null} Table {table_num}
+            Table {table_num}
           </h5>
           <div className="ms-auto badge-primary">
             <Counter time={time} /> mins ago
@@ -44,8 +57,6 @@ const OrderField = ({ table_num, items, place, fullOrder, order_id, time }) => {
               updateFinishedOrders(
                 fullOrder,
                 setCompletedOrders,
-                completedOrders,
-                completedOrders
               )
             }
           >

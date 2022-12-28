@@ -1,17 +1,15 @@
-import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useAppContext } from "../context/UseStateContext";
+import { IOrder } from "../types/types";
 
-const Alert = ({ fullOrder }) => {
+type AlertProps = {
+  fullOrder: IOrder;
+};
+////////ORDER DELETION CONFIRMATION MODAL
+const Alert = ({ fullOrder }: AlertProps) => {
   const { order_id, table_num } = fullOrder;
-  const {
-    setShowAlert,
-    showAlert,
-    updateFinishedOrders,
-    setDeletedOrders,
-    deletedOrders,
-  } = useAppContext();
-  console.log(fullOrder);
+  const { setShowAlert, showAlert, updateFinishedOrders, setDeletedOrders } =
+    useAppContext();
   return (
     <Modal show={showAlert} onHide={() => setShowAlert(false)}>
       <Modal.Header closeButton>
@@ -24,13 +22,8 @@ const Alert = ({ fullOrder }) => {
         <Button
           variant="secondary"
           onClick={() => {
-            updateFinishedOrders(
-              fullOrder,
-              setDeletedOrders,
-              deletedOrders,
-              deletedOrders
-            );
-            setShowAlert(false)
+            updateFinishedOrders(fullOrder, setDeletedOrders);
+            setShowAlert(false);
           }}
         >
           Yes

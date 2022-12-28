@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-const Counter = ({ time }) => {
+type CounterProps = {
+  time: number
+}
+///////////COUNTS THE MINUTES ELAPSED SINCE AN ORDER HAS ARRIVED IN THE KITCHEN
+const Counter = ({ time } : CounterProps) => {
   const date = new Date();
   const currentTime = date.getTime();
   const [timer, setTimer] = useState(true);
@@ -10,7 +14,6 @@ const Counter = ({ time }) => {
     setTimeout(() => {
       let secondsAgo = Math.floor((currentTime - time) / 1000);
       setMinutesAgo(Math.floor(secondsAgo / 60));
-      console.log(minutesAgo);
       setTimer((prev) => !prev);
     }, 1000);
   }, [timer]);
