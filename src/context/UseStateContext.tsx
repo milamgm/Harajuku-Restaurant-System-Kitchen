@@ -111,20 +111,15 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
   useEffect(() => {
     addToDB(deletedOrders, "deletedOrders");
   }, [deletedOrders]);
-  return (
-    <context.Provider
-      value={{
-        updateFinishedOrders,
-        activeOrders,
-        completedOrders,
-        setCompletedOrders,
-        deletedOrders,
-        setDeletedOrders,
-        setShowAlert,
-        showAlert,
-      }}
-    >
-      {children}
-    </context.Provider>
-  );
+  const values = {
+    updateFinishedOrders,
+    activeOrders,
+    completedOrders,
+    setCompletedOrders,
+    deletedOrders,
+    setDeletedOrders,
+    setShowAlert,
+    showAlert,
+  };
+  return <context.Provider value={values}>{children}</context.Provider>;
 };

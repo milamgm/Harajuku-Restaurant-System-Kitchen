@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <BrowserRouter>
+  <BrowserRouter basename="/harajuku-restaurant-system-kitchen">
     <App />
   </BrowserRouter>
 );
