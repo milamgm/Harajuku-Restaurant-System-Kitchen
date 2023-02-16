@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore"
+
 export interface IItem{
     id: string,
     name: string,
@@ -8,6 +10,6 @@ export interface IItem{
 export interface IOrder {
     order_id: string,
     table_num: number,
-    time: number,
+    time: Timestamp,
     items: IItem[]
 }

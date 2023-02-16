@@ -6,7 +6,10 @@ import { useAppContext } from "../context/UseStateContext";
 const Orders = () => {
   const { activeOrders } = useAppContext();
   const ordersPerArrival = [...activeOrders].sort((a, b) => {
-    return new Date(a.time).valueOf() - new Date(b.time).valueOf();
+    return (
+      new Date(a.time.seconds * 1000).valueOf() -
+      new Date(b.time.seconds * 1000).valueOf()
+    );
   });
   return (
     <div>

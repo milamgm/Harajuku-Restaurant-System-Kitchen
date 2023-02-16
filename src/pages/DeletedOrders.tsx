@@ -8,21 +8,22 @@ import { IOrder } from "../types/types";
 //SHOWS TODAY'S DELETED ORDERS IN ORDER OF ARRIVAL (FROM NEWEST TO OLDEST).
 const DeletedOrders = () => {
   const { deletedOrders, setDeletedOrders } = useAppContext();
-  const currentDate = new Date();
+  const systemDate = new Date();
   const ordersPerArrival = [...deletedOrders].sort((a, b) => {
-    return new Date(b.time).valueOf() - new Date(a.time).valueOf();
+    return (
+      new Date(b.time.seconds * 1000).valueOf() -
+      new Date(a.time.seconds * 1000).valueOf()
+    );
   });
   useEffect(() => {
     onSnapshot(collection(db, "deletedOrders"), (snapshot) => {
       setDeletedOrders([]);
       snapshot.docs.forEach((doc) => {
         const orderFetch = doc.data() as IOrder;
-
+        const orderDate = orderFetch.time.toDate();
         if (
-          new Date(orderFetch.time).getFullYear() ===
-            currentDate.getFullYear() &&
-          new Date(orderFetch.time).getMonth() === currentDate.getMonth() &&
-          new Date(orderFetch.time).getDate() === currentDate.getDate()
+          `${orderDate.getDate()}-${orderDate.getMonth()}-${orderDate.getFullYear()}` ===
+          `${systemDate.getDate()}-${systemDate.getMonth()}-${systemDate.getFullYear()}`
         ) {
           setDeletedOrders((prevDeletedOrders) => [
             ...prevDeletedOrders,
@@ -43,7 +44,7 @@ const DeletedOrders = () => {
                 <span className="ms-auto">Table {deletedOrder.table_num}</span>
                 <small className="ms-auto text-muted">
                   Created at{" "}
-                  {new Date(deletedOrder.time).toLocaleString("de-DE", {
+                  {deletedOrder.time.toDate().toLocaleString("de-DE", {
                     hour: "2-digit",
                     minute: "2-digit",
                   })}

@@ -5,6 +5,7 @@ import Alert from "./Alert";
 import Counter from "./Counter";
 import newOrderSound from "../../public/sounds/new_order_notification.wav";
 import { IItem, IOrder } from "../types/types";
+import { Timestamp } from "firebase/firestore";
 //const notificationSound = new Audio(newOrderSound);
 
 type OrderFieldProps = {
@@ -12,7 +13,7 @@ type OrderFieldProps = {
   items: IItem[];
   fullOrder: IOrder;
   order_id: string;
-  time: number;
+  time: Timestamp;
 };
 //////////FIELD THAT DISPLAYS THE ORDER DATA ON THE ACTIVEORDERS PAGE
 const OrderField = ({
